@@ -1,6 +1,5 @@
 import streamlit as st
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_ollama import ChatOllama
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -17,7 +16,7 @@ class MinisterAgent:
         # Initialize native Cerebras class
         self.llm = ChatCerebras(
             model="llama3.1-8b",
-            api_key=os.getenv("CEREBRAS_API_KEY"),
+            api_key=st.secrets["CEREBRAS_API_KEY"],
             base_url="https://api.cerebras.ai/v1",
             temperature=0.2
         )
