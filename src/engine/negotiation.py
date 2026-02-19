@@ -30,8 +30,9 @@ class NegotiationEngine:
             self.history.append(f"Minister: {minister_response}")
             st.chat_message("assistant", avatar="🏛️").write(minister_response)
 
-            # Check for Agreement Convergence
-            if "deal" in minister_response.lower() or "agree" in minister_response.lower():
+            # Check for Agreement Convergence (must be explicit acceptance)
+            acceptance_phrases = ["i accept", "we accept", "i agree to", "we agree to", "deal is done", "[ACCEPT]"]
+            if any(phrase in minister_response.lower() for phrase in acceptance_phrases):
                 st.success("🤝 A Debt-Neutral Agreement has been reached!")
                 return self.history
 
@@ -61,7 +62,9 @@ class NegotiationEngine:
             # Update for next turn
             current_offer = cfo_response
 
-            if "deal" in cfo_response.lower() or "accept" in cfo_response.lower():
+            # Check for explicit acceptance from CFO
+            acceptance_phrases = ["i accept", "we accept", "i agree to", "we agree to", "deal is done", "[ACCEPT]"]
+            if any(phrase in cfo_response.lower() for phrase in acceptance_phrases):
                 st.success("🤝 Corporate HQ has approved the resource swap!")
                 return self.history
 

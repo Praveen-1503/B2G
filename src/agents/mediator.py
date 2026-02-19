@@ -1,10 +1,18 @@
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+import os
+from langchain_cerebras import ChatCerebras
 
 class MediatorAgent:
     def __init__(self):
-        # Use a slightly higher temperature (0.5) to allow for creative "Swap" ideas
-        self.llm = ChatOllama(model="phi3:mini", temperature=0.5)
+        # Use ChatCerebras for native speed and Llama 3.1 for high-level reasoning
+        self.llm = ChatCerebras(
+            model="llama3.1-8b",
+            api_key=os.getenv("CEREBRAS_API_KEY"),
+            base_url="https://api.cerebras.ai/v1",
+            temperature=0.5 # Higher temperature for creative swap ideas
+        )
         
         self.system_template = """
         You are the Neutral UN Mediator for SDG 17. Your goal is to break deadlocks.

@@ -1,3 +1,7 @@
 streamlit
 pandas
 langchain
+openai>=1.0.0
+langchain-openai 
+python-dotenv
+langchain-cerebras
